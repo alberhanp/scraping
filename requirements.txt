@@ -3,3 +3,5 @@ bs4
 requests
 pymongo
 python-decouple
+uvicorn
+selenium
