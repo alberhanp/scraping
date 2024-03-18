@@ -15,7 +15,7 @@ Ele é focado em um site específico.
 1. Instale o Docker/Docker-Compose se não tiver ainda.
 2. Vá até o diretório raiz do projeto, onde se encontra o arquivo docker-compose.yml .
 3. Execute o seguinte comando:
-   - docker compose up -d
+   - `docker compose up -d`
 4. Após isso, a API para fazer scraping e consultar dados estará disponível na porta 8080.
 
 ## Como Executar localmente
@@ -42,7 +42,7 @@ Ele é focado em um site específico.
 4. **Rodando o projeto**
    - Certifique-se que o .env está com as credencias certas para o seu banco.
    - Uma vez no diretório raiz do projeto, execute o seguinte comando:
-       - pyhton3 main.py
+       - `pyhton3 main.py`
 
 ---
 
