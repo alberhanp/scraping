@@ -66,8 +66,30 @@ class SaveInfo:
             'Mozilla/5.0 (Linux; Android 13; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
         ]
 
+        user_agent = random.choice(user_agents)
+
+        if "iPhone" in user_agent:
+            platform = "iOS"
+            mobile = '?1'
+        elif "Android" in user_agent:
+            platform = "Android"
+            mobile = '?1'
+        elif "Macintosh" in user_agent:
+            platform = "macOS"
+            mobile = '?0'
+        elif "Windows NT" in user_agent:
+            platform = "Windows"
+            mobile = '?0'
+        elif "Ubuntu" in user_agent:
+            platform = "Linux"
+            mobile = '?0'
+        else:
+            platform = "Unknown"
+            mobile = '?0'
+
         url_get_cookies = 'https://www.similarweb.com/'
-        headers_get_cookies = {
+
+        headers = {
             'authority': 'www.similarweb.com',
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,'
                       '*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -78,8 +100,8 @@ class SaveInfo:
             'same-site': 'None',
             'pragma': 'no-cache',
             'sec-ch-ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"',
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Linux"',
+            'sec-ch-ua-mobile': f'{mobile}',
+            'sec-ch-ua-platform': f'{platform}',
             'sec-fetch-dest': 'document',
             'sec-fetch-mode': 'navigate',
             'sec-fetch-site': 'same-origin',
@@ -107,45 +129,22 @@ class SaveInfo:
 
         sessao = requests.Session()
         request_get_cookies = sessao.get(url_get_cookies,
-                                         headers=headers_get_cookies)  # , proxies=proxy) # Descomentar essa linha se for usar proxy
+                                         headers=headers)  # , proxies=proxy) # Descomentar essa linha se for usar proxy
 
         if request_get_cookies.ok:
             tempo_espera = random.uniform(7,
                                           13)  # Coloquei um tempo de espera para simular um comportamento mais humano, antes tava conseguindo só 2 requisições
             time.sleep(tempo_espera)
 
-            headers_get_data = {
-
-                # Tirei esses headers do navegador, mas não sei se são todos necessários, mantive pra simular melhor o navegador (e tbm pq funcionu assim :p)
-
-                'authority': 'www.similarweb.com',
-                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,'
-                          '*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-                'accept-language': 'pt-BR,pt;q=0.9',
-                'cache-control': 'no-cache',
-                'dnt': '1',
-                'x-requested-with': 'XMLHttpRequest',
-                'same-site': 'None',
-                'pragma': 'no-cache',
-                'sec-ch-ua': '"Google Chrome";v="119", "Chromium";v="119", "Not?A_Brand";v="24"',
-                'sec-ch-ua-mobile': '?0',
-                'sec-ch-ua-platform': '"Linux"',
-                'sec-fetch-dest': 'document',
-                'sec-fetch-mode': 'navigate',
-                'sec-fetch-site': 'same-origin',
-                'sec-fetch-user': '?1',
-                'upgrade-insecure-requests': '1',
-                'user-agent': choice(user_agents),
-                'referer': 'https://www.similarweb.com/',  # usei o referer pra simular o fluxo de acesso
-            }
-
             # proxy2 = {
             #     'http': choice(proxies_list),
             # }
 
+            headers['referer'] = 'https://www.similarweb.com/'
+
             url_get_data = f'https://www.similarweb.com/website/{self.url}/'
             resposta_get_data = sessao.get(url_get_data,
-                                           headers=headers_get_data)  # , proxies=proxy2) # Descomentar essa linha se for usar proxy
+                                           headers=headers)  # , proxies=proxy2) # Descomentar essa linha se for usar proxy
 
             resposta_em_texto = resposta_get_data.text
 
