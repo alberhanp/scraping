@@ -12,12 +12,13 @@ def convert_objectid(obj):
 
 
 class GetInfo:
-    def __init__(self, websites_db):
+    def __init__(self, websites_db, url):
         self.website_db = websites_db
+        self.url = url
 
-    def get_info(self, url: str):
+    def get_info(self):
         try:
-            result = self.website_db.find_one_or_none({'Website': url})
+            result = self.website_db.find_one_or_none({'Website': self.url})
             if not result:
                 return 'Nenhum dado encontrado para esse site.'
             return convert_objectid(result)

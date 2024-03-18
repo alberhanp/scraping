@@ -21,9 +21,8 @@ class OperationStatus(BaseModel):
 
 async def async_save_info(url: str, operation_id: str):
     try:
-        simlar_url = f"https://www.similarweb.com/website/{url}"
-        s_info = SaveInfo(simlar_url, websites_db)
-        await s_info.save()
+        s_info = SaveInfo(url, websites_db)
+        await s_info.scrap_similarweb()
         operations_db[operation_id] = {"status": "Concluído com sucesso"}
     except Exception as e:
         operations_db[operation_id] = {"status": f"Falhou: {str(e)}"}
@@ -45,8 +44,8 @@ async def save_info(url: str):
 @router.post("/get_info/{url}")
 async def get_info(url: str):
     try:
-        g_info = GetInfo(websites_db)
-        return g_info.get_info(url)
+        g_info = GetInfo(websites_db, url)
+        return g_info.get_info()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting data: {e}")
 

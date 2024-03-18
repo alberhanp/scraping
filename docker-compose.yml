@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  app_scraping:
+    build:
+      context: .
+    ports:
+      - 8080:8003
+    volumes:
+      - ./.env:/app/.env
+      - ./repository:/app/repository
+      - ./routes:/app/routes
+      - ./service:/app/service
+    networks:
+      - mongo_net
+
+  scraping_mongodb:
+    image: mongo
+    container_name: similarweb_scraping
+    ports:
+      - 37317:27017
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+#    volumes:
+#      - ~/mongo_vol:/data/db
+#      - ~/mongo_vol:/data/configdb
+    networks:
+      - mongo_net
+
+networks:
+  mongo_net:
+    driver: bridge
+
