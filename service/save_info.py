@@ -50,28 +50,20 @@ class SaveInfo:
                 self.websites_db.insert(data)
 
         except Exception as e:
-            print(f"Error scraping data: {e}")
-            return None
+            raise Exception(f"Error scraping data: {e}")
 
     def fetch_with_curl(self):
         # Funcionou com esses user agents, não senti necessidade de inserir mais, mas se precisar, é só adicionar.
         user_agents = [
-            "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0",
-            "Mozilla/5.0 (Linux; Android 13; SM-G998B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (iPhone14,3; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19A346 Safari/602.1",
-            "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:15.0) Gecko/20100101 Firefox/15.0.1",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246",
-            "Mozilla/5.0 (Linux; Android 11; Redmi Note 8 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1",
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/69.0.3497.105 Mobile/15E148 Safari/605.1",
-            "Mozilla/5.0 (iPhone9,4; U; CPU iPhone OS 10_0_1 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14A403 Safari/602.1",
-            "Mozilla/5.0 (Linux; Android 12; moto g stylus 5G (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 12; moto g pure) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 13; SM-A515F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 13; SM-A536U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 13; SM-G991U) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 13; SM-S908B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
-            "Mozilla/5.0 (Linux; Android 13; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36",
+            'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
+            'Mozilla/5.0 (Linux; Android 12; moto g stylus 5G (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
+            'Mozilla/5.0 (iPhone14,3; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19A346 Safari/602.1'
+            'Mozilla/5.0 (Linux; Android 12; moto g pure) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
+            'Mozilla/5.0 (iPhone14,3; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19A346 Safari/602.1'
+            'Mozilla/5.0 (iPhone; CPU iPhone OS 12_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Mobile/15E148 Safari/604.1'
+            'Mozilla/5.0 (iPhone14,3; U; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/19A346 Safari/602.1'
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
+            'Mozilla/5.0 (Linux; Android 13; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Mobile Safari/537.36'
         ]
 
         url_get_cookies = 'https://www.similarweb.com/'
@@ -96,29 +88,29 @@ class SaveInfo:
             'user-agent': choice(user_agents),
         }
 
-        # Estava funcionando sem proxy, mas depois de um tempo, começou a dar erro 403, então adicionei um proxy.
+        # Comecei usando proxy, mas depois percebi que não era necessário, então comentei o código, mas deixei aqui caso seja necessário usar.
         # Achei esses proxies na internet, não sei se são os melhores, mas funcionaram (todos BR).
 
-        proxies_list = [
-            'http://52.67.10.183:3128',
-            'http://52.67.10.183:80',
-            'http://54.233.119.172:3128',
-            'http://18.228.198.164:80',
-            'http://20.206.106.192:8123',
-            'http://20.206.106.192:80',
-            'http://20.206.106.192:80'
-        ]
-
-        proxy = {
-            'http': choice(proxies_list),
-        }
+        # proxies_list = [
+        #     'http://52.67.10.183:3128',
+        #     'http://52.67.10.183:80',
+        #     'http://54.233.119.172:3128',
+        #     'http://18.228.198.164:80',
+        #     'http://20.206.106.192:8123',
+        #     'http://20.206.106.192:80',
+        #     'http://20.206.106.192:80'
+        # ]
+        #
+        # proxy = {
+        #     'http': choice(proxies_list),
+        # }
 
         sessao = requests.Session()
         request_get_cookies = sessao.get(url_get_cookies,
-                                         headers=headers_get_cookies, proxies=proxy)
+                                         headers=headers_get_cookies)  # , proxies=proxy) # Descomentar essa linha se for usar proxy
 
         if request_get_cookies.ok:
-            tempo_espera = random.uniform(6,
+            tempo_espera = random.uniform(7,
                                           13)  # Coloquei um tempo de espera para simular um comportamento mais humano, antes tava conseguindo só 2 requisições
             time.sleep(tempo_espera)
 
@@ -144,16 +136,16 @@ class SaveInfo:
                 'sec-fetch-user': '?1',
                 'upgrade-insecure-requests': '1',
                 'user-agent': choice(user_agents),
-                'referer': 'https://www.similarweb.com/',
+                'referer': 'https://www.similarweb.com/',  # usei o referer pra simular o fluxo de acesso
             }
 
-            proxy2 = {
-                'http': choice(proxies_list),
-            }
+            # proxy2 = {
+            #     'http': choice(proxies_list),
+            # }
 
             url_get_data = f'https://www.similarweb.com/website/{self.url}/'
             resposta_get_data = sessao.get(url_get_data,
-                                           headers=headers_get_data, proxies=proxy2)
+                                           headers=headers_get_data)  # , proxies=proxy2) # Descomentar essa linha se for usar proxy
 
             resposta_em_texto = resposta_get_data.text
 
