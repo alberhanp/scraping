@@ -46,6 +46,4 @@ Ele é focado em um site específico.
 
 ---
 
-Este README oferece um guia básico para iniciar o projeto. Para mais detalhes, consulte o desenvolvedor:
-
-- Albert Hanchuck: +55 35 99953 9008
+Este README oferece um guia básico para iniciar o projeto. Para mais detalhes, consulte o desenvolvedor
